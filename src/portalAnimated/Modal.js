@@ -32,34 +32,29 @@ class Modal extends Component {
   }
 
   render() {
-    console.log("modal: " + this.props.isVisible);
-    const items = this.props.isVisible ? ["item1"] : [];
+    const items = this.props.isVisible ? ["modal"] : [];
 
     const children = (
       <Transition
         keys={items}
-        from={{ opacity: 0 }}
-        enter={{ opacity: 1 }}
-        leave={{ opacity: 0 }}
+        from={{ opacity: 0, scale: 0.7 }}
+        enter={{ opacity: 1, scale: 1 }}
+        leave={{ opacity: 0, scale: 0.7 }}
       >
-        {items.map(item => styles => (
-          <ModalStyle style={styles}>{this.props.children}</ModalStyle>
-        ))}
+        {items.map(item => styles => {
+          const { scale, ...rest } = styles;
+          console.log("hehe " + scale);
+
+          return (
+            <ModalStyle style={rest}>
+              <div style={{ transform: `scale(${scale})` }}>
+                {this.props.children}
+              </div>
+            </ModalStyle>
+          );
+        })}
       </Transition>
     );
-
-    // const children = (
-    //   <Spring from={{ opacity: 0 }} to={{ opacity: 1 }}>
-    //     {styles => {
-    //       if (this.props.isVisible) {
-    //         return (
-    //           <ModalStyle style={styles}>{this.props.children}</ModalStyle>
-    //         );
-    //       }
-    //       return <ModalStyle style={styles} />;
-    //     }}
-    //   </Spring>
-    // );
 
     return ReactDOM.createPortal(children, this.el);
   }
