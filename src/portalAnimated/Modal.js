@@ -33,6 +33,7 @@ class Modal extends Component {
 
   render() {
     const items = this.props.isVisible ? ["modal"] : [];
+    console.log("render modal");
 
     const children = (
       <Transition
@@ -43,8 +44,6 @@ class Modal extends Component {
       >
         {items.map(item => styles => {
           const { scale, ...rest } = styles;
-          console.log("hehe " + scale);
-
           return (
             <ModalStyle style={rest}>
               <div style={{ transform: `scale(${scale})` }}>
